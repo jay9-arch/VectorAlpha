@@ -1,0 +1,6 @@
+// Deliberately broken: a literal division by zero (runtime division by a
+// series that happens to be zero is fine -- it yields a missing value).
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.5;
+HALF = close / (2 - 2);
+BUY WHEN close > HALF;

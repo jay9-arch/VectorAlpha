@@ -1,0 +1,15 @@
+// description: Close breaks above EMA(20) + STDEV(10) band (entry) / below EMA(20) - STDEV(10) band (exit)
+//
+// Needed arithmetic, which the original grammar could not express --
+// this was the one strategy with no compiled path before DSL v2.
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.5;
+UNIVERSE = {};
+
+EMA_20 = EMA(close, 20);
+STDEV_10 = STDEV(close, 10);
+UPPER = EMA_20 + STDEV_10;
+LOWER = EMA_20 - STDEV_10;
+
+BUY WHEN CROSSOVER(close, UPPER);
+SELL WHEN CROSSUNDER(close, LOWER);

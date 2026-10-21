@@ -1,0 +1,17 @@
+// description: Bollinger squeeze breakout: buy an upper-band breakout that follows a volatility squeeze
+//
+// SQUEEZE_RATIO is today's band width relative to its 60-bar minimum (1.0 = tightest in 60 bars);
+// the rule looks at yesterday's value with LAG, so the breakout bar itself cannot hide the squeeze.
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.25;
+UNIVERSE = {};
+
+MID       = SMA(close, 20);
+SD        = STDEV(close, 20);
+UPPER     = MID + 2 * SD;
+LOWER     = MID - 2 * SD;
+BANDWIDTH = (UPPER - LOWER) / MID;
+SQUEEZE_RATIO = BANDWIDTH / LOWEST(BANDWIDTH, 60);
+
+BUY  WHEN CROSSOVER(close, UPPER) AND LAG(SQUEEZE_RATIO, 1) < 1.25;
+SELL WHEN CROSSUNDER(close, MID);

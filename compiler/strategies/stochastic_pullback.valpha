@@ -1,0 +1,17 @@
+// description: Stochastic %K/%D pullback in an uptrend: buy the oversold cross, sell the overbought cross or a trend break
+//
+// Flat windows make HIGH - LOW zero; the division then yields a missing value and the rules
+// simply do not fire (division by zero is safe in the DSL).
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.2;
+UNIVERSE = {};
+
+K_N    = 14;
+LOW_N  = LOWEST(close, K_N);
+HIGH_N = HIGHEST(close, K_N);
+K      = (close - LOW_N) / (HIGH_N - LOW_N) * 100;
+D      = SMA(K, 3);
+TREND  = SMA(close, 50);
+
+BUY  WHEN CROSSOVER(K, D) AND K < 30 AND close > TREND;
+SELL WHEN (CROSSUNDER(K, D) AND K > 70) OR close < TREND * 0.95;

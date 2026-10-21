@@ -1,0 +1,16 @@
+// description: Kaufman efficiency-ratio trend filter: EMA(20) cross, but only when the move is efficient (ER > 0.3)
+//
+// ER = |net change over 10 bars| / (sum of |daily changes| over 10 bars). Near 1 = clean trend,
+// near 0 = chop. Uses ABS and LAG; the sum is SMA(...) * 10.
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.25;
+UNIVERSE = {};
+
+ER_N     = 10;
+NET_MOVE = ABS(close - LAG(close, ER_N));
+PATH     = SMA(ABS(close - LAG(close, 1)), ER_N) * ER_N;
+ER       = NET_MOVE / PATH;
+EMA_20   = EMA(close, 20);
+
+BUY  WHEN CROSSOVER(close, EMA_20) AND ER > 0.3;
+SELL WHEN CROSSUNDER(close, EMA_20) OR ER < 0.1;

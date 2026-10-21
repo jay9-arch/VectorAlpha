@@ -1,0 +1,11 @@
+// description: SMA(50)/SMA(200) golden-cross filtered by RSI(14) < 70 -- report's illustrative strategy
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.5;
+UNIVERSE = {};
+
+SMA_50 = SMA(close, 50);
+SMA_200 = SMA(close, 200);
+RSI_14 = RSI(close, 14);
+
+BUY WHEN CROSSOVER(SMA_50, SMA_200) AND RSI_14 < 70;
+SELL WHEN CROSSUNDER(SMA_50, SMA_200);

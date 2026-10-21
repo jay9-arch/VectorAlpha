@@ -1,0 +1,12 @@
+// description: Rate-of-change momentum: 20-day ROC turns up inside a strong 60-day trend; exit on momentum loss
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.25;
+UNIVERSE = {};
+
+ROC_20 = close / LAG(close, 20) - 1;
+ROC_60 = close / LAG(close, 60) - 1;
+SMA_50 = SMA(close, 50);
+RSI_14 = RSI(close, 14);
+
+BUY  WHEN CROSSOVER(ROC_20, 0.02) AND ROC_60 > 0.05 AND RSI_14 < 75;
+SELL WHEN ROC_20 < -0.03 OR close < SMA_50 * 0.97;

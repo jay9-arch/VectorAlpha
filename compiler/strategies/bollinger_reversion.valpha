@@ -1,0 +1,13 @@
+// description: Bollinger(20, 2 sigma) mean reversion: buy the bounce off the lower band, exit at the mean
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.2;
+UNIVERSE = {A,AAL};
+
+MID    = SMA(close, 20);
+SD     = STDEV(close, 20);
+LOWER  = MID - 2 * SD;
+UPPER  = MID + 2 * SD;
+RSI_14 = RSI(close, 14);
+
+BUY  WHEN CROSSOVER(close, LOWER) AND RSI_14 < 45;
+SELL WHEN close >= MID OR CROSSUNDER(close, LOWER - SD);   // take profit at the mean, bail out at 3 sigma

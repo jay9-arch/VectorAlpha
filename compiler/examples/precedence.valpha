@@ -1,0 +1,11 @@
+// Parser smoke test: the printed AST must show * binding tighter than +,
+// unary minus tighter than *, and parentheses overriding both.
+INITIAL_CAPITAL = 1000;
+ALLOCATION = 1;
+A = close + 2 * 3;
+B = (close + 2) * 3;
+C = -close * 2 + 1;
+D = close - 1 - 2;
+E = close / 2 / 4;
+BUY WHEN A < B AND C > D OR E == 1;
+SELL WHEN (A < B OR C > D) AND E != 1;

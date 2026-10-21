@@ -1,0 +1,8 @@
+// Deliberately broken: arithmetic on a boolean, a non-constant window, an
+// out-of-range ALLOCATION, and a rule that is not a boolean.
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 1.5;
+SMA_3 = SMA(close, 3);
+X = CROSSOVER(SMA_3, close) + 1;
+Y = SMA(close, SMA_3);
+BUY WHEN SMA_3 + 1;

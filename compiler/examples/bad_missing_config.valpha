@@ -1,0 +1,3 @@
+// Deliberately broken: INITIAL_CAPITAL and ALLOCATION are required.
+SMA_3 = SMA(close, 3);
+BUY WHEN close > SMA_3;

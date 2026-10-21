@@ -1,0 +1,10 @@
+// description: Z-score mean reversion: buy when price recovers from -2 sigma, exit at the mean or on a -3 sigma break
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.2;
+UNIVERSE = {};
+
+LOOKBACK = 30;
+Z = (close - SMA(close, LOOKBACK)) / STDEV(close, LOOKBACK);
+
+BUY  WHEN CROSSOVER(Z, -2);
+SELL WHEN CROSSOVER(Z, 0) OR CROSSUNDER(Z, -3);

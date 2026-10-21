@@ -1,0 +1,20 @@
+// DSL v2 tour: arithmetic, nesting, constants, named booleans, numeric
+// CROSSOVER arguments. Run `./valphac examples/arithmetic_demo.valpha`
+// to see the three-address IR, the CSE merges and the fusion plan.
+INITIAL_CAPITAL = 250000;
+ALLOCATION = 0.25;
+UNIVERSE = { HONA, VSNT };
+
+WINDOW = 10 * 2;                          // constant folded; usable as a window size
+BAND = 1.5;
+
+MID   = EMA(close, WINDOW);               // = EMA(close, 20)
+SPREAD = BAND * STDEV(close, 10);
+UPPER = MID + SPREAD;
+LOWER = MID - SPREAD;
+MID2  = EMA(close, 20);                   // CSE merges this into MID
+PCT   = (close - SMA(close, WINDOW)) / SMA(close, WINDOW) * 100;   // nested SMA computed once
+OVERSOLD = CROSSOVER(RSI(close, 14), 30); // named boolean, inlined into rules
+
+BUY WHEN OVERSOLD OR (CROSSOVER(close, UPPER) AND PCT < 10);
+SELL WHEN CROSSUNDER(close, LOWER) OR -PCT > 15;

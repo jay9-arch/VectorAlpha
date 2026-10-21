@@ -1,0 +1,11 @@
+// description: Connors RSI(2) pullback: buy a deep 2-day oversold dip above the 200-day average, sell the bounce
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.2;
+UNIVERSE = {};
+
+RSI_2   = RSI(close, 2);
+SMA_200 = SMA(close, 200);
+SMA_5   = SMA(close, 5);
+
+BUY  WHEN close > SMA_200 AND RSI_2 < 10;
+SELL WHEN close > SMA_5;

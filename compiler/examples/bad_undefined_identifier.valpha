@@ -1,0 +1,10 @@
+// Deliberately broken -- for demoing Phase 2's error diagnostics.
+// SMA_9 and RSI_5 are referenced but never defined.
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.5;
+UNIVERSE = { STOCKA };
+
+SMA_3 = SMA(close, 3);
+
+BUY WHEN CROSSOVER(SMA_3, SMA_9) AND RSI_5 < 70;
+SELL WHEN CROSSUNDER(SMA_3, SMA_9);

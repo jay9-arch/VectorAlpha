@@ -1,0 +1,18 @@
+// description: MACD(12,26,9) signal-line cross, only while price is above its 100-day average
+//
+// MACD and its signal line are built purely from the DSL: SIGNAL is an EMA *of* MACD (a nested indicator).
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.25;
+UNIVERSE = {};
+
+FAST_N = 12;
+SLOW_N = 26;
+SIGNAL_N = 9;
+
+MACD   = EMA(close, FAST_N) - EMA(close, SLOW_N);
+SIGNAL = EMA(MACD, SIGNAL_N);
+HIST   = MACD - SIGNAL;
+TREND  = SMA(close, 100);
+
+BUY  WHEN CROSSOVER(MACD, SIGNAL) AND close > TREND;
+SELL WHEN CROSSUNDER(MACD, SIGNAL);

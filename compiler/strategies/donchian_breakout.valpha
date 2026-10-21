@@ -1,0 +1,16 @@
+// description: Donchian/Turtle channel breakout on closes: buy a new 20-bar high, exit on a 10-bar low
+//
+// LAG(...,1) makes the channel use only *previous* bars, so a breakout compares today's close
+// with yesterday's channel (HIGHEST/LOWEST include the current bar).
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.25;
+UNIVERSE = {};
+
+ENTRY_N = 20;
+EXIT_N  = 10;
+
+UPPER_CH = LAG(HIGHEST(close, ENTRY_N), 1);
+LOWER_CH = LAG(LOWEST(close, EXIT_N), 1);
+
+BUY  WHEN CROSSOVER(close, UPPER_CH);
+SELL WHEN CROSSUNDER(close, LOWER_CH);

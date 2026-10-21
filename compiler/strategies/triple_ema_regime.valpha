@@ -1,0 +1,17 @@
+// description: Triple-EMA regime: buy the pullback to the fast EMA when 8/21/55 are stacked and volatility is calm
+//
+// UPTREND and CALM are named booleans: they are inlined into the rules, no separate evaluation.
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.25;
+UNIVERSE = {};
+
+FAST = EMA(close, 8);
+MED  = EMA(close, 21);
+SLOW = EMA(close, 55);
+VOL  = STDEV(close, 20) / SMA(close, 20);     // volatility as a fraction of price
+
+UPTREND = FAST > MED AND MED > SLOW;
+CALM    = VOL < 0.04;
+
+BUY  WHEN UPTREND AND CROSSOVER(close, FAST) AND CALM;
+SELL WHEN CROSSUNDER(FAST, MED) OR close < SLOW;

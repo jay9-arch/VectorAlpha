@@ -1,0 +1,7 @@
+// Deliberately broken: wrong arity for LAG/ABS and a zero-length rolling window.
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.5;
+X = LAG(close);
+Y = HIGHEST(close, 0);
+Z = ABS(close, 2);
+BUY WHEN close > X;

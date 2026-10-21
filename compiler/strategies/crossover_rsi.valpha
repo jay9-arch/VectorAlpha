@@ -1,0 +1,16 @@
+// description: SMA(3)/SMA(7) crossover filtered by RSI(5) < 70 -- IO-spec worked example
+//
+// This file is the single source of truth for the strategy: the naive
+// Python engine, the pandas/NumPy engine and the compiled C++ engine all
+// read it. UNIVERSE = {} means "use every CSV found in the data
+// directory" (the Python menu chooses tickers itself and ignores UNIVERSE).
+INITIAL_CAPITAL = 100000;
+ALLOCATION = 0.5;
+UNIVERSE = {A,AAL};
+
+SMA_3 = SMA(close, 3);
+SMA_7 = SMA(close, 7);
+RSI_5 = RSI(close, 5);
+
+BUY WHEN CROSSOVER(SMA_3, SMA_7) AND RSI_5 < 70;
+SELL WHEN CROSSUNDER(SMA_3, SMA_7);
